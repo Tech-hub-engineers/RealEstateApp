@@ -5,7 +5,7 @@ import logo from '../assets/images/logo_sewo.png';
 
 const Navbar = ({ text }) => {
   return (
-    <nav className="flex justify-between align-middle py-5 px-10">
+    <nav className="font-comic flex justify-between align-middle py-5 px-10">
       <img src={logo} alt="logo" className="" />
       <p className="text-sm text-blue-950 font-semibold">{text}</p>
     </nav>

@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,jsx,ts,tsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        comic: ['Comic Sans MS', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }

@@ -23,7 +23,7 @@ const Login_Slide_Images = () => {
   }, []);
 
   return (
-    <div>
+    <div className='font-comic'>
       <div key={items[currentIndex].id} className="flex flex-col py-5 px-24">
         <img
           src={items[currentIndex].image}

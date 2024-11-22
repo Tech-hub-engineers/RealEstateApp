@@ -6,16 +6,16 @@ import { BiLogoFacebookSquare } from "react-icons/bi";
 
 const Login_Welcome_Text = () => {
     return (
-        <div className='text-base px-28 pt-16'>
+        <div className='text-base font-comic px-28 pt-16'>
             <h1 className='text-blue-900 font-bold text-3xl tracking-wide mb-3'>Welcome Back to Sewo!</h1>
             <p className='text-gray-400 text-sm mb-4'>Sign in your account</p>
 
             <form action="" method="post" className='flex flex-col'>
                 <label htmlFor="email" className='text-xs mb-1'>Your Email</label>
-                <input className='mb-2 border-blue-700 w-[90%] mb-4 outline-none border-2 py-1 px-2 rounded-md' type="text" name="email" id="email" placeholder='email' />
+                <input className='mb-2 border-blue-700 w-[90%] mb-4 outline-none border-2 py-1 px-2 rounded-md' type="text" name="email" id="email" />
 
                 <label htmlFor="password" className='text-xs mb-1'>Your Password</label>
-                <input className='mb-1 border-blue-700 w-[90%] outline-none border-2 py-1 px-2 rounded-md' type="password" name="password" id="password" placeholder='password' />
+                <input className='mb-1 border-blue-700 w-[90%] outline-none border-2 py-1 px-2 rounded-md' type="password" name="password" id="password"/>
 
                 <div className='justify-between align-middle flex my-2 pr-11 text-sm'>
                     <div>
