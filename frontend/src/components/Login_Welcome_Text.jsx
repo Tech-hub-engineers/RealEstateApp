@@ -45,7 +45,6 @@ const Login_Welcome_Text = () => {
             if (response.ok) {
                 setMessage('Login successful!');
                 setError('');
-                // Optionally, redirect or handle the successful login
             } else {
                 setError(data.errors || 'Invalid credentials. Please try again.');
                 setMessage('');
