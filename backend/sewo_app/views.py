@@ -26,23 +26,19 @@ def login_view(request):
             password = data.get('password')
             remember_me = data.get('remember_me', False)
 
-            # Debug: Log the data to check if it's being received correctly
             print(f"Received data: email={email}, password={password}, remember_me={remember_me}")
 
             if not email or not password:
                 return JsonResponse({"errors": "Email and password are required."}, status=400)
 
-            # Check if the email exists in the database
             try:
-                user = UserProfile.objects.get(email=email)  # Look up user by email
+                user = UserProfile.objects.get(email=email) 
             except UserProfile.DoesNotExist:
                 return JsonResponse({"errors": "User with this email does not exist."}, status=400)
 
-            # Authenticate the user
             user = authenticate(request, username=email, password=password)
 
             if user is not None:
-                # Log the user in
                 login(request, user)
 
                 if remember_me:
