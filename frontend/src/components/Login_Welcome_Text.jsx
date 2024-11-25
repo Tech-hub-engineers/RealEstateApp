@@ -100,7 +100,7 @@ const Login_Welcome_Text = () => {
                     </div>
 
                     <div className='text-gray-700'>
-                        <a href="#">Forgot Password?</a>
+                        <Link to={'/forgotpwd'}>Forgot Password</Link>
                     </div>
                 </div>
 
