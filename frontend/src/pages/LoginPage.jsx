@@ -1,6 +1,6 @@
-import Login_Navbar from '../components/Login_Navbar';
-import Login_Welcome_Text from '../components/Login_Welcome_Text';
-import Login_Slide_Images from '../components/Login_Slide_Images';
+import Login_Navbar from '../components/welcome_page/Login_Navbar';
+import Login_Welcome_Text from '../components/welcome_page/Login_Welcome_Text';
+import Login_Slide_Images from '../components/welcome_page/Login_Slide_Images';
 import '../assets/styles.css';
 
 const loginpage = () => {

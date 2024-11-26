@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../assets/styles.css';
+import '../../assets/styles.css';
 import { Link } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import { BiLogoFacebookSquare } from 'react-icons/bi';

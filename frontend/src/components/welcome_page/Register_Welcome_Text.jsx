@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../assets/styles.css';
+import '../../assets/styles.css';
 import { Link } from 'react-router-dom';
 
 const Login_Welcome_Text = () => {

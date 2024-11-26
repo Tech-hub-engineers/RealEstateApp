@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types'; 
-import '../assets/styles.css';
-import logo from '../assets/images/logo_sewo.png';
+import PropTypes from 'prop-types';
+import '../../assets/styles.css';
+import logo from '../../assets/images/logo_sewo.png';
 
 const Navbar = ({ text }) => {
   return (

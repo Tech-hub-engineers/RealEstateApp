@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
+from rest_framework.response import Response  # Corrected import
 from rest_framework.views import APIView
 from rest_framework import status
 from .models import UserProfile
@@ -12,12 +13,15 @@ class UserProfileCreateView(APIView):
 
         if serializer.is_valid():
             serializer.save()
-
             return JsonResponse({'message': 'User registered successfully!'}, status=status.HTTP_201_CREATED)
 
         return JsonResponse({'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request, *args, **kwargs):
+        return Response({"detail": "Method 'GET' not allowed."}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
+# Login view
 def login_view(request):
     if request.method == "POST":
         try:
@@ -32,15 +36,17 @@ def login_view(request):
                 return JsonResponse({"errors": "Email and password are required."}, status=400)
 
             try:
-                user = UserProfile.objects.get(email=email) 
+                user = UserProfile.objects.get(email=email)
             except UserProfile.DoesNotExist:
                 return JsonResponse({"errors": "User with this email does not exist."}, status=400)
 
             user = authenticate(request, username=email, password=password)
 
             if user is not None:
+                # Login the user
                 login(request, user)
 
+                # Manage session expiration based on 'remember_me'
                 if remember_me:
                     request.session.set_expiry(1209600)  # Expire session after two weeks
                 else:

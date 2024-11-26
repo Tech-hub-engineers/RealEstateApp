@@ -1,7 +1,7 @@
 import React from 'react'
-import Login_Navbar from '../components/Login_Navbar';
-import Login_Slide_Images from '../components/Login_Slide_Images';
-import Forgot_Pswd from '../components/Forgot_Pswd';
+import Login_Navbar from '../components/welcome_page/Login_Navbar';
+import Login_Slide_Images from '../components/welcome_page/Login_Slide_Images';
+import Forgot_Pswd from '../components/welcome_page/Forgot_Pswd';
 import '../assets/styles.css';
 
 const ForgotPasswordPage = () => {

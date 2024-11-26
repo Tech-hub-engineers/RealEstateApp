@@ -1,6 +1,6 @@
 import { MdCancel } from "react-icons/md";
 import { Link } from 'react-router-dom';
-import '../assets/styles.css';
+import '../../assets/styles.css';
 
 const Forgot_Pswd = () => {
   return (

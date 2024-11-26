@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import image1 from "../assets/images/login_image1.jpg";
-import image2 from "../assets/images/login_image2.jpg";
-import image3 from "../assets/images/login_image3.jpg";
-import "../assets/styles.css";
+import image1 from "../../assets/images/login_image1.jpg";
+import image2 from "../../assets/images/login_image2.jpg";
+import image3 from "../../assets/images/login_image3.jpg";
+import '../../assets/styles.css';
 
 const Login_Slide_Images = () => {
 
