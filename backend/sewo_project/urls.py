@@ -16,8 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+# from django.conf.urls import urls
+from sewo_app.views import *
 
 urlpatterns = [
-    path('', include('sewo_app.urls')),
+    # path('', include('sewo_app.urls')),
+    path('', ReactView.as_view(), name="something"),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('admin/', admin.site.urls),
 ]

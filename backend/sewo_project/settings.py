@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'sewo_app',
     'rest_framework',
     'corsheaders',
+    'knox',
     'rest_framework.authtoken', 
 ]
 
@@ -57,6 +58,7 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -68,12 +70,18 @@ CORS_ALLOW_HEADERS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ],
+
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+            'rest_framework.permissions.IsAuthenticated',
+            'rest_framework.permissions.AllowAny',
+        ],
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'knox.auth.TokenAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ],
+
 }
 
 ROOT_URLCONF = 'sewo_project.urls'

@@ -1,61 +1,47 @@
 import React, { useState } from 'react';
 import '../../assets/styles.css';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link } from 'react-router-dom'; 
+import axios from 'axios';
 import { FcGoogle } from 'react-icons/fc';
 import { BiLogoFacebookSquare } from 'react-icons/bi';
 
-const Login_Welcome_Text = () => {
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-        remember_me: false,
-    });
+const getCSRFToken = () => {
+  const csrfToken = document.cookie.split(';').find((cookie) => cookie.trim().startsWith('csrftoken='));
+  return csrfToken ? csrfToken.split('=')[1] : null;
+};
 
+const csrfToken = getCSRFToken();
+
+
+const Login_Welcome_Text = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [remember_me, setRemember_me] = useState(false);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
-    const navigate = useNavigate();
-
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setFormData({
-            ...formData,
-            [name]: type === 'checkbox' ? checked : value,
-        });
-    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const { email, password, remember_me } = formData;
-
         try {
-            const response = await fetch('http://localhost:8000/login/', {
-                method: 'POST',
+            const response = await axios.post('http://localhost:8000/login/',{
+                email: email,
+                password: password,
+            }, {
                 headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email,
-                    password,
-                    remember_me,
-                }),
+                    'Content-Type': 'application/json', 
+                    'X-CSRFToken': csrfToken,
+                }
             });
 
-            const data = await response.json(); 
-
-            if (response.ok) {
-                setMessage('Login successful!');
-                setError('');
-                 navigate('/home');
-            } else {
-                setError(data.errors || 'Invalid credentials. Please try again.');
-                setMessage('');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            setError('Something went wrong. Please try again.');
-            setMessage('');
-        }
+            setMessage(response.data.message);
+            setError(""); 
+      
+            window.location.href = '/home';
+          } catch (err) {
+            setError(err.response ? err.response.data.detail : "Something went wrong");
+            setMessage(""); 
+          }
     };
 
     return (
@@ -72,8 +58,8 @@ const Login_Welcome_Text = () => {
                     className="mb-2 border-blue-700 w-[90%] mb-4 outline-none border-2 py-1 px-2 rounded-md"
                     type="email"
                     name="email"
-                    value={formData.email}
-                    onChange={handleChange}
+                    value={email}  
+                    onChange={(e) => setEmail(e.target.value)} 
                     id="email"
                     required
                 />
@@ -83,8 +69,8 @@ const Login_Welcome_Text = () => {
                     className="mb-1 border-blue-700 w-[90%] outline-none border-2 py-1 px-2 rounded-md"
                     type="password"
                     name="password"
-                    value={formData.password}
-                    onChange={handleChange}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     id="password"
                     required
                 />
@@ -95,8 +81,8 @@ const Login_Welcome_Text = () => {
                             type="checkbox"
                             className="mr-1"
                             name="remember_me"
-                            checked={formData.remember_me}
-                            onChange={handleChange}
+                            checked={remember_me} 
+                            onChange={(e) => setRemember_me(e.target.checked)}  
                         />
                         <label htmlFor="remember_me">Remember Me</label>
                     </div>
