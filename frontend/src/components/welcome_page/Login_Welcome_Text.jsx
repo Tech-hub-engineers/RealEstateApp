@@ -1,49 +1,38 @@
 import React, { useState } from 'react';
 import '../../assets/styles.css';
-import { Link } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FcGoogle } from 'react-icons/fc';
 import { BiLogoFacebookSquare } from 'react-icons/bi';
-
-const getCSRFToken = () => {
-  const csrfToken = document.cookie.split(';').find((cookie) => cookie.trim().startsWith('csrftoken='));
-  return csrfToken ? csrfToken.split('=')[1] : null;
-};
-
-const csrfToken = getCSRFToken();
 
 
 const Login_Welcome_Text = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [remember_me, setRemember_me] = useState(false);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:8000/login/',{
+            const response = await axios.post('http://127.0.0.1:8000/login/',{
                 email: email,
                 password: password,
-            }, {
-                headers: {
-                    'Content-Type': 'application/json', 
-                    'X-CSRFToken': csrfToken,
-                }
             });
 
             setMessage(response.data.message);
             setError(""); 
       
-            window.location.href = '/home';
+            navigate('/home');
           } catch (err) {
             setError(err.response ? err.response.data.detail : "Something went wrong");
             setMessage(""); 
           }
     };
-
+    
     return (
         <div className="text-base font-comic px-28 pt-16">
             <h1 className="text-blue-900 font-bold text-3xl tracking-wide mb-3">Welcome Back to Sewo!</h1>
@@ -81,8 +70,6 @@ const Login_Welcome_Text = () => {
                             type="checkbox"
                             className="mr-1"
                             name="remember_me"
-                            checked={remember_me} 
-                            onChange={(e) => setRemember_me(e.target.checked)}  
                         />
                         <label htmlFor="remember_me">Remember Me</label>
                     </div>

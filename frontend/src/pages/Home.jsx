@@ -34,6 +34,14 @@ const Home = () => {
         <Search_Card/>
         </div>
         </div>
+
+        {/* Optional */}
+
+        <div className='bg-white py-5 px-7 rounded-lg my-2'>
+        <div>
+        <Search_Card/>
+        </div>
+        </div>
       </div>
       </div>
       

@@ -1,7 +1,7 @@
 import React from 'react'
 import { IoNotifications } from "react-icons/io5";
 import {Link} from "react-router-dom";
-import profileimg from '../../assets/images/profileimg.jpg';
+import profileimg from '../../assets/images/profileimg2.png';
 
 const Profile_and_notification = () => {
   return (

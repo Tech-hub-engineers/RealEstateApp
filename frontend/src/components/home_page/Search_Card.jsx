@@ -1,42 +1,51 @@
-import React from 'react';
-import home_image_1 from '../../assets/images/home_image_1.jpg';
-import home_image_2 from '../../assets/images/home_image_2.jpg';
-import home_image_3 from '../../assets/images/home_image_3.jpg';
+import React, { useState, useEffect } from 'react';
 import '../../assets/styles.css';
 import { FaLocationDot } from "react-icons/fa6";
 import { IoBed } from "react-icons/io5";
 import { FaPeopleRoof } from "react-icons/fa6";
 import { GiPathDistance } from "react-icons/gi";
+import { Link } from 'react-router-dom';
+import { FiMessageCircle } from "react-icons/fi";
+import { BiBookmarkAlt } from "react-icons/bi";
+import { MdInsertLink } from "react-icons/md";
+import axios from 'axios';
 
 
-const Card = ({ image, title, price, location }) => {
+const Card = ({ image, title, price, location, bed, accomodates, homelink }) => {
+
   return (
-    <div className='card'>
-      <img src={image} alt={title} className='object-cover w-[100%] h-[200px] rounded-md'/>
-      <div>
-        <div className='flex justify-between'>
-          <p>{title}</p>
-          <p>{price}</p>
+    <div className="relative group">
+      <img
+        src={image}
+        alt={title}
+        className='cursor-pointer object-cover w-[100%] h-[200px] rounded-md'
+      />
+
+
+      <div className="mt-2">
+        <div className='flex justify-between items-center'>
+          <Link to={homelink} className='text-base w-[80%]'>{title}</Link>
+          <p className='text-blue-500 bg-slate-200 text-center p-1 m-0 rounded-lg text-md'>${price}</p>
         </div>
 
-        <div className='flex items-center'>
-        <FaLocationDot />
-          <p className='text-gray-400'>{location}</p>
+        <div className='flex items-center text-sm'>
+          <FaLocationDot className='text-sm' />
+          <p className='text-gray-400 m-1'>{location}</p>
         </div>
 
-        <div className='flex gap-2'>
-          <div className='flex items-center'>
-          <IoBed />
-            <p>2</p>
+        <div className='flex gap-2 text-sm font-medium'>
+          <div className='flex items-center m-1'>
+            <IoBed className='mr-1' />
+            <p>{bed}</p>
           </div>
 
-          <div className='flex items-center'>
-          <FaPeopleRoof />
-            <p>3</p>
+          <div className='flex items-center m-1'>
+            <FaPeopleRoof className='mr-1' />
+            <p>{accomodates}</p>
           </div>
 
-          <div className='flex items-center'>
-          <GiPathDistance />
+          <div className='flex items-center m-1'>
+            <GiPathDistance className='mr-1' />
             <p>24M</p>
           </div>
         </div>
@@ -45,23 +54,46 @@ const Card = ({ image, title, price, location }) => {
   );
 };
 
-
 const Search_Card = () => {
-  const card_details = [
-    [home_image_1, "Start Sun Hotel & Apartment", "$80", "JI Letda Nasir 45 RT 001/02"],
-    [home_image_2, "Start Sun Hotel & Apartment", "$80", "JI Letda Nasir 45 RT 001/02"],
-    [home_image_3, "Start Sun Hotel & Apartment", "$80", "JI Letda Nasir 45 RT 001/02"]
-  ];
+  const [houses, setHouses] = useState([]);
+  const [randomHouses, setRandomHouses] = useState([]);
+
+  useEffect(() => {
+    const fetchHouses = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/housedata/');
+        setHouses(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchHouses();
+  }, []);
+
+  useEffect(() => {
+    if (houses.length > 0) {
+      const randomThreeHouses = [];
+      for (let i = 0; i < 3; i++) {
+        const randomIndex = Math.floor(Math.random() * houses.length);
+        randomThreeHouses.push(houses[randomIndex]);
+        houses.splice(randomIndex, 1);
+      }
+      setRandomHouses(randomThreeHouses);
+    }
+  }, [houses]);
 
   return (
     <div className='grid grid-cols-3 gap-4 my-8'>
-      {card_details.map((card, index) => (
+      {randomHouses.map((house, index) => (
         <Card
-          key={index} 
-          image={card[0]} 
-          title={card[1]} 
-          price={card[2]} 
-          location={card[3]}
+          key={index}
+          homelink={house.listing_url}
+          image={house.picture_url}
+          title={house.name}
+          price={house.price}
+          location={house.host_location}
+          bed={house.bedrooms}
+          accomodates={house.accommodates}
         />
       ))}
     </div>

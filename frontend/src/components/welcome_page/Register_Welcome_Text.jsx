@@ -10,7 +10,6 @@ const Register_Welcome_Text = () => {
     origin: '',
     email: '',
     password: '',
-    remember_me: false,
   });
 
   const [message, setMessage] = useState('');
@@ -19,34 +18,33 @@ const Register_Welcome_Text = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     try {
-      const response = await axios.get('http://localhost:8000/');
-      setDetails(response.data); 
-
-      const { fname, origin, email, password, remember_me } = formData;
-      await axios.post('http://localhost:8000/', {
-        fname,
-        origin,
-        email,
-        password,
-        remember_me,
+      const response = await axios.post('http://127.0.0.1:8000/user/', {
+        fullname: formData.fname,
+        origin: formData.origin,
+        email: formData.email,
+        password: formData.password,
       });
-
-      setMessage('Registration successful!');
-      window.location.href = '/home';
-
+    
+      setMessage(response.data.message);
+      navigate('/');
+    
     } catch (err) {
-      setError('There was an error with the registration.');
+      if (err.response && err.response.status === 400) {
+        setError('Email already registered');
+      } else {
+        setError('There was an error with the registration.');
+      }
     }
   };
 
@@ -108,8 +106,6 @@ const Register_Welcome_Text = () => {
               type="checkbox"
               className="mr-1"
               name="remember_me"
-              checked={formData.remember_me}
-              onChange={handleChange}
             />
             <label htmlFor="remember_me">
               I agree to Sewo{' '}
