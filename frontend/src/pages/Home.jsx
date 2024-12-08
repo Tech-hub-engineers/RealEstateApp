@@ -7,6 +7,8 @@ import Side_menu from '../components/home_page/Side_menu'
 import Logout from '../components/home_page/Logout'
 import Search_filter from '../components/home_page/Search_filter'
 import Search_Card from '../components/home_page/Search_Card'
+import Popular_filter from '../components/home_page/Popular_filter'
+import Popular_card from '../components/home_page/Popular_card'
 
 const Home = () => {
   return (
@@ -26,7 +28,7 @@ const Home = () => {
         <Profile_and_notification />
       </div>
       <div className='p-5'>
-      <h1 className='font-semibold text-2xl'>Find Your Best Real Estate</h1>
+      <h1 className='font-semibold text-2xl mb-3'>Find Your Best Real Estate</h1>
       
       <div className='bg-white py-5 px-7 rounded-lg my-2'>
         <Search_filter/>
@@ -35,15 +37,15 @@ const Home = () => {
         </div>
         </div>
 
-        {/* Optional */}
+        
+      </div>
+      <div className='bg-white py-5 px-7 rounded-lg mx-5 my-3'>
+        <Popular_filter/>
+        <Popular_card/>
+      </div>
+      </div>
 
-        <div className='bg-white py-5 px-7 rounded-lg my-2'>
-        <div>
-        <Search_Card/>
-        </div>
-        </div>
-      </div>
-      </div>
+
       
     </div>
   );
