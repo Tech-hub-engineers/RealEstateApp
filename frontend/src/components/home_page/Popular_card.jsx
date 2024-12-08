@@ -58,14 +58,13 @@ const Popular_card = ({ filter }) => {
     const [houses, setHouses] = useState([]);
     const [randomHouses, setRandomHouses] = useState([]);
 
-    // Fetch houses based on the filter
     useEffect(() => {
         const fetchHouses = async () => {
             try {
                 let url = 'http://127.0.0.1:8000/housedata/';
 
-                // Change URL based on the selected filter
                 if (filter === 'recommended') {
+                    window.location.reload();
                     url = 'http://127.0.0.1:8000/recommendedhouses/';
                 } else if (filter === 'nearest') {
                     url = 'http://127.0.0.1:8000/nearesthouses/';
@@ -78,7 +77,7 @@ const Popular_card = ({ filter }) => {
             }
         };
         fetchHouses();
-    }, [filter]); // Re-fetch data when filter changes
+    }, [filter]); 
 
     useEffect(() => {
         if (houses.length > 0) {
