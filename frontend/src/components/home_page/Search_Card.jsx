@@ -5,16 +5,18 @@ import { IoBed } from "react-icons/io5";
 import { FaPeopleRoof } from "react-icons/fa6";
 import { GiPathDistance } from "react-icons/gi";
 import { Link } from 'react-router-dom';
-import { FiMessageCircle } from "react-icons/fi";
-import { BiBookmarkAlt } from "react-icons/bi";
-import { MdInsertLink } from "react-icons/md";
 import axios from 'axios';
+import { motion } from 'framer-motion';
 
-
-const Card = ({ image, title, price, location, bed, accomodates, homelink }) => {
+const Card = ({ image, title, price, location, bed, accomodates, id }) => {
 
   return (
-    <div className="relative group">
+    <Link to={`/housedata/${id}`} className="relative group">
+      <motion.div
+                whileHover={{ scale: 1.05 }} 
+                transition={{ duration: 0.3 }}
+                className="flex gap-3 cursor-pointer"
+            >
       <img
         src={image}
         alt={title}
@@ -24,7 +26,7 @@ const Card = ({ image, title, price, location, bed, accomodates, homelink }) => 
 
       <div className="mt-2">
         <div className='flex justify-between items-center'>
-          <Link to={homelink} className='text-base w-[80%]'>{title}</Link>
+          <p className='text-base w-[80%]'>{title}</p>
           <p className='text-blue-500 bg-slate-200 text-center p-1 m-0 rounded-lg text-md'>${price}</p>
         </div>
 
@@ -50,7 +52,8 @@ const Card = ({ image, title, price, location, bed, accomodates, homelink }) => 
           </div>
         </div>
       </div>
-    </div>
+      </motion.div>
+    </Link>
   );
 };
 
@@ -87,6 +90,7 @@ const Search_Card = () => {
       {randomHouses.map((house, index) => (
         <Card
           key={index}
+          id={house.id}
           homelink={house.listing_url}
           image={house.picture_url}
           title={house.name}
